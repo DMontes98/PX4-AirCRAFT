@@ -25,3 +25,5 @@ then
 fi
 
 safety_button start
+
+ifup can1
