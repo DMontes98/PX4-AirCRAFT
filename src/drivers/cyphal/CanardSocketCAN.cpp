@@ -50,7 +50,9 @@ uint64_t getMonotonicTimestampUSec(void)
 
 int CanardSocketCAN::init()
 {
-	const char *const can_iface_name = "can0";
+	PX4_INFO("SocketCAN is being used!");
+
+	const char *const can_iface_name = "can1";
 
 	struct sockaddr_can addr;
 	struct ifreq ifr;
