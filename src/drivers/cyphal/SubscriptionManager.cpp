@@ -60,11 +60,11 @@ void SubscriptionManager::subscribe()
 	_heartbeat_sub.subscribe();
 
 #if CONFIG_CYPHAL_GETINFO_RESPONDER
-	_getinfo_rsp.subscribe();
+	//_getinfo_rsp.subscribe();
 #endif
 
-	_access_rsp.subscribe();
-	_list_rsp.subscribe();
+	//_access_rsp.subscribe();
+	//_list_rsp.subscribe();
 
 	updateDynamicSubscriptions();
 }

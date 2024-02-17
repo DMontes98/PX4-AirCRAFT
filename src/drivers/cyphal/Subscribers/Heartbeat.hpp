@@ -67,6 +67,7 @@ public:
 	void callback(const CanardRxTransfer &receive) override
 	{
 		//TODO heartbeat management
+		PX4_INFO("Heartbeat Received");
 	};
 
 };
