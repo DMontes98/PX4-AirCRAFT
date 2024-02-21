@@ -545,7 +545,6 @@ else
 	if param greater -s AL_MSCS_STARTUP 0
 	then
 		mscs start
-	else
 	fi
 #
 # End of autostart.

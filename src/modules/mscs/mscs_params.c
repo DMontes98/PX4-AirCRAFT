@@ -9,4 +9,18 @@
  * @boolean
  * @group MSCS
  */
-PARAM_DEFINE_INT32(AL_MSCS_STARTUP, 0);
+PARAM_DEFINE_INT32(MSCS_STARTUP, 0);
+
+/**
+ * Define Cyphal Node ID for Left ADP
+ *
+ * @group MSCS
+ */
+PARAM_DEFINE_INT32(MSCS_ID_ADP_L, 22);
+
+/**
+ * Define Cyphal Node ID for Right ADP
+ *
+ * @group MSCS
+ */
+PARAM_DEFINE_INT32(MSCS_ID_ADP_R, 23);

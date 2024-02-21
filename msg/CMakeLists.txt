@@ -143,6 +143,17 @@ set(msg_files
 	MissionResult.msg
 	MountOrientation.msg
 	ModeCompleted.msg
+	MscsLeftAdpRawAngleOfAttackData.msg
+	MscsLeftAdpRawAngleOfSideslipData.msg
+	MscsLeftAdpRawDifferentialPressureData.msg
+	MscsLeftAdpRawStaticPressureData.msg
+	MscsLeftAdpRawTemperatureData.msg
+	MscsRightAdpRawAngleOfAttackData.msg
+	MscsRightAdpRawAngleOfSideslipData.msg
+	MscsRightAdpRawDifferentialPressureData.msg
+	MscsRightAdpRawStaticPressureData.msg
+	MscsRightAdpRawTemperatureData.msg
+	MscsStatus.msg
 	NavigatorMissionItem.msg
 	NormalizedUnsignedSetpoint.msg
 	NpfgStatus.msg
