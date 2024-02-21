@@ -1,0 +1,5 @@
+menuconfig MODULES_MSCS
+	bool "mscs"
+	default n
+	---help---
+		Enable support for the AirCRAFT Lab's Modular Sensor and Computing System

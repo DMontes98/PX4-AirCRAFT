@@ -66,8 +66,13 @@ public:
 
 	void callback(const CanardRxTransfer &receive) override
 	{
-		//TODO heartbeat management
-		PX4_INFO("Heartbeat Received");
+		/* VARIABLE DEFINITIONS */
+		CanardNodeID heartbeat_node;
+
+		/* FUNCTION BODY */
+		/* Identify Heartbeat Message */
+		heartbeat_node = receive.metadata.remote_node_id;
+		PX4_INFO("Heartbeat Received from node [%hhu]", heartbeat_node);
 	};
 
 };
