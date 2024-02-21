@@ -26,9 +26,6 @@
 
 #include <uORB/Publication.hpp>
 #include <uORB/Subscription.hpp>
-#include <uORB/topics/aircraft_state_raw.h>
-
-#include <uORB/topics/adp_data.h>
 #include <uORB/topics/airspeed_validated.h>
 #include <uORB/topics/sensor_combined.h>
 #include <uORB/topics/manual_control_setpoint.h>
@@ -76,8 +73,8 @@ private:
 	//static const hrt_abstime	SAMPLE_INTERVAL{10_ms};
 
 	// Performance (perf) counters
-	//perf_counter_t	_loop_perf{perf_alloc(PC_ELAPSED, MODULE_NAME": cycle")};
-	//perf_counter_t	_loop_interval_perf{perf_alloc(PC_INTERVAL, MODULE_NAME": interval")};
+	perf_counter_t	_loop_perf{perf_alloc(PC_ELAPSED, MODULE_NAME": cycle")};
+	perf_counter_t	_loop_interval_perf{perf_alloc(PC_INTERVAL, MODULE_NAME": interval")};
 
 };
 

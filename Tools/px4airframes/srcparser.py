@@ -43,6 +43,10 @@ class AirframeGroup(object):
         """
         if (self.type == "Standard Plane"):
             return "Plane"
+        elif (self.type == "Aircraft Lab's Sharpshooter Platform"):
+            return "Plane"
+        elif (self.type == "Flying Wing"):
+            return "FlyingWing"
         elif (self.type == "Flying Wing"):
             return "FlyingWing"
         elif (self.type == "Quadrotor x"):

@@ -84,6 +84,9 @@ px4_add_romfs_files(
 	# [9000, 9999] Octorotor +"
 	9001_octo_+
 
+	# [10000, 10999] AirCRAFT Lab Platforms
+	10100_sharpshooter_base
+
 	# [11000, 11999] Hexa Cox
 	11001_hexa_cox
 

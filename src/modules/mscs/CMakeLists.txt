@@ -7,7 +7,7 @@
 
 px4_add_module(
 	MODULE modules__mscs
-	MAIN data_acquisition_interface
+	MAIN mscs
 	COMPILE_FLAGS
 		#-DDEBUG_BUILD   # uncomment for PX4_DEBUG output
 		#-O0             # uncomment when debugging
