@@ -208,6 +208,13 @@ void CyphalNode::Run()
 	}
 
 #endif
+	/* Run Cyphal Command Interface */
+	if (_mscs_command_transaction_sub.updated()) {
+		/* Get Transaction Message */
+		_mscs_command_transaction_sub.copy(&_mscs_command_transaction_msg);
+		/* Handle Command Transaction */
+		_handle_command(_mscs_command_transaction_msg);
+	}
 
 	_canard_handle.transmit();
 
@@ -230,7 +237,6 @@ void CyphalNode::Run()
 
 	pthread_mutex_unlock(&_node_mutex);
 }
-
 template <typename As, typename F>
 static void traverseTree(const CanardTreeNode *const root, const F &op)  // NOLINT this recursion is tightly bounded
 {
@@ -391,6 +397,82 @@ void CyphalNode::sendHeartbeat()
 		_uavcan_node_heartbeat_last = now;
 	}
 }
+void CyphalNode::_handle_command(mscs_command_transaction_s MSCS_command_transaction_msg) {
+	/* VARIABLE DEFINITION */
+	uavcan_node_ExecuteCommand_Request_1_2 command_request{0};
+	const hrt_abstime now = hrt_absolute_time();
+	size_t payload_size;
+	const CanardTransferMetadata transfer_metadata = {
+		.priority       = CanardPriorityNominal,
+		.transfer_kind  = CanardTransferKindRequest,
+		.port_id        = uavcan_node_ExecuteCommand_1_2_FIXED_PORT_ID_,
+		.remote_node_id = MSCS_command_transaction_msg.node_id,
+		.transfer_id    = _uavcan_node_execute_command_transfer_id++
+	};
+	uint8_t serialization_buffer[uavcan_node_ExecuteCommand_Request_1_2_SERIALIZATION_BUFFER_SIZE_BYTES_];
+
+	/* FUNCTION BODY */
+	/* Build Command Message */
+	if (MSCS_command_transaction_msg.command) {
+		command_request.command = MSCS_command_transaction_msg.command;
+
+		switch (command_request.command)
+		{
+		case uavcan_node_ExecuteCommand_Request_1_2_COMMAND_DATA_ACQUISITION_START:
+			PX4_INFO("[CyphalNode::_handle_command()] - Command DATA_ACQUISITION_START Received!");
+			/* Number of Parameters */
+			command_request.parameter.count = 0;
+			break;
+		case uavcan_node_ExecuteCommand_Request_1_2_COMMAND_DATA_ACQUISITION_CONFIG:
+			PX4_INFO("[CyphalNode::_handle_command()] - Command DATA_ACQUISITION_CONFIG Received!");
+			/* Number of Parameters */
+			command_request.parameter.elements[0] = MSCS_command_transaction_msg.command_args[0];
+			command_request.parameter.elements[1] = MSCS_command_transaction_msg.command_args[1];
+			command_request.parameter.elements[2] = MSCS_command_transaction_msg.command_args[2];
+			command_request.parameter.elements[3] = MSCS_command_transaction_msg.command_args[3];
+
+			/* Command Arguments */
+			command_request.parameter.count = 4;
+			break;
+		default:
+			break;
+		}
+
+		uavcan_node_ExecuteCommand_Request_1_2_serialize_(&command_request, serialization_buffer, &payload_size);
+
+		PX4_INFO("[CyphalNode::_handle_command()] - command_request.command = 0x%02X [%hu]", command_request.command, command_request.command);
+		PX4_INFO("[CyphalNode::_handle_command()] - payload_size = %hu", payload_size);
+		PX4_INFO("[CyphalNode::_handle_command()] - payload[0] = 0x%02X", serialization_buffer[0]);
+		PX4_INFO("[CyphalNode::_handle_command()] - payload[1] = 0x%02X", serialization_buffer[1]);
+		PX4_INFO("[CyphalNode::_handle_command()] - payload[2] = 0x%02X", serialization_buffer[2]);
+		PX4_INFO("[CyphalNode::_handle_command()] - payload[3] = 0x%02X", serialization_buffer[3]);
+		PX4_INFO("[CyphalNode::_handle_command()] - payload[4] = 0x%02X", serialization_buffer[4]);
+		PX4_INFO("[CyphalNode::_handle_command()] - payload[5] = 0x%02X", serialization_buffer[5]);
+		PX4_INFO("[CyphalNode::_handle_command()] - payload[6] = 0x%02X", serialization_buffer[6]);
+		PX4_INFO("[CyphalNode::_handle_command()] - payload[7] = 0x%02X", serialization_buffer[7]);
+
+		int32_t result = _canard_handle.TxPush(now + PUBLISHER_DEFAULT_TIMEOUT_USEC,
+							&transfer_metadata,
+							payload_size,
+							&serialization_buffer
+							);
+
+		if (result < 0) {
+			// An error has occurred: either an argument is invalid or we've ran out of memory.
+			// It is possible to statically prove that an out-of-memory will never occur for a given application if the
+			// heap is sized correctly; for background, refer to the Robson's Proof and the documentation for O1Heap.
+			PX4_ERR("Heartbeat transmit error %" PRId32 "", result);
+		}
+
+		/* Set command as handled */
+		MSCS_command_transaction_msg.command_handled = 1;
+		_mscs_command_transaction_pub.publish(MSCS_command_transaction_msg);
+
+		/* Remove data updated flag */
+		_mscs_command_transaction_sub.copy(&MSCS_command_transaction_msg);
+	}
+}
+
 
 bool UavcanMixingInterface::updateOutputs(bool stop_motors, uint16_t outputs[MAX_ACTUATORS], unsigned num_outputs,
 		unsigned num_control_groups_updated)

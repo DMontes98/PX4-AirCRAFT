@@ -58,6 +58,9 @@ SubscriptionManager::~SubscriptionManager()
 void SubscriptionManager::subscribe()
 {
 	_heartbeat_sub.subscribe();
+	_raw_data_sub.subscribe();
+	_calibrated_data_sub.subscribe();
+	_execute_command_sub.subscribe();
 
 #if CONFIG_CYPHAL_GETINFO_RESPONDER
 	//_getinfo_rsp.subscribe();

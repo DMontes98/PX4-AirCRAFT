@@ -92,6 +92,8 @@ public:
 			_right_adp_node_id = _mscs_status_msg.right_adp_node_id;
 		}
 
+		//PX4_INFO("HEARTBEAT RECEIVED");
+
 		/* Check if MSCS is active */
 		if (_mscs_status_msg.module_active == true) {
 			/* Deserialize Heartbeat Structure */
@@ -115,6 +117,8 @@ public:
 					_mscs_status_msg.left_adp_uptime = _heartbeat_message.uptime;
 					_mscs_status_msg.left_adp_mode   = _heartbeat_message.mode.value;
 					_mscs_status_msg.left_adp_status = _heartbeat_message.vendor_specific_status_code;
+
+					//PX4_INFO("HB - %llu", system_timestamp);
 
 					updated = true;
 
@@ -146,7 +150,7 @@ private:
 	uavcan_node_Heartbeat_1_0 _heartbeat_message{};
 	size_t _heartbeat_message_buffer_size;
 
-	/* uORB Publishers*/
+	/* uORB */
 	mscs_status_s _mscs_status_msg{};
 	uORB::Subscription _mscs_status_sub{ORB_ID(mscs_status)};
 	uORB::Publication<mscs_status_s> _mscs_status_pub{ORB_ID(mscs_status)};
@@ -154,5 +158,4 @@ private:
 	/* Node IDs */
 	CanardNodeID _left_adp_node_id;
 	CanardNodeID _right_adp_node_id;
-
 };

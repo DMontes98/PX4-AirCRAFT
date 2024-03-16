@@ -13,6 +13,8 @@ px4_add_module(
 		#-O0             # uncomment when debugging
 	SRCS
 		MSCS.cpp
+		MSCS.hpp
+		MSCS_poll.cpp
 	DEPENDS
 		px4_work_queue
 	)

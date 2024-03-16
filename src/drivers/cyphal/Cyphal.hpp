@@ -47,6 +47,7 @@
 #include <uORB/Subscription.hpp>
 #include <uORB/SubscriptionCallback.hpp>
 #include <uORB/topics/actuator_outputs.h>
+#include <uORB/topics/mscs_command_transaction.h>
 #include <uORB/topics/battery_status.h>
 #include <uORB/topics/parameter_update.h>
 #include <uORB/topics/sensor_gps.h>
@@ -57,6 +58,8 @@
 
 #include "Publishers/Publisher.hpp"
 #include "Publishers/uORB/uorb_publisher.hpp"
+
+#include <uavcan/node/ExecuteCommand_1_2.h>
 
 #ifdef CONFIG_CYPHAL_NODE_MANAGER
 #include "NodeManager.hpp"
@@ -113,7 +116,7 @@ class CyphalNode : public ModuleParams, public px4::ScheduledWorkItem
 	 * Base interval, has to be complemented with events from the CAN driver
 	 * and uORB topics sending data, to decrease response time.
 	 */
-	static constexpr unsigned ScheduleIntervalMs = 3;
+	static constexpr unsigned ScheduleIntervalMs = 2;
 
 public:
 
@@ -156,6 +159,13 @@ private:
 	uint8_t _uavcan_node_heartbeat_buffer[uavcan_node_Heartbeat_1_0_EXTENT_BYTES_];
 	hrt_abstime _uavcan_node_heartbeat_last{0};
 	CanardTransferID _uavcan_node_heartbeat_transfer_id{0};
+	CanardTransferID _uavcan_node_execute_command_transfer_id{0};
+
+	/* MSCS Command Handling */
+	void _handle_command(mscs_command_transaction_s MSCS_command_transaction_msg);
+	mscs_command_transaction_s _mscs_command_transaction_msg{0};
+	uORB::Subscription _mscs_command_transaction_sub{ORB_ID(mscs_command_transaction)};
+	uORB::Publication<mscs_command_transaction_s> _mscs_command_transaction_pub{ORB_ID(mscs_command_transaction)};
 
 	DEFINE_PARAMETERS(
 		(ParamInt<px4::params::CYPHAL_ENABLE>) _param_uavcan_v1_enable,

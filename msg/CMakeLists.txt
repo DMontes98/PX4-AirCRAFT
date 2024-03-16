@@ -123,6 +123,7 @@ set(msg_files
 	InternalCombustionEngineStatus.msg
 	IridiumsbdStatus.msg
 	IrlockReport.msg
+	KeyEvents.msg
 	LandingGear.msg
 	LandingGearWheel.msg
 	LandingTargetInnovations.msg
@@ -143,16 +144,43 @@ set(msg_files
 	MissionResult.msg
 	MountOrientation.msg
 	ModeCompleted.msg
+	MscsCalibrationEvent.msg
+	MscsCommandTransaction.msg
+	MscsEvent.msg
 	MscsLeftAdpRawAngleOfAttackData.msg
 	MscsLeftAdpRawAngleOfSideslipData.msg
 	MscsLeftAdpRawDifferentialPressureData.msg
 	MscsLeftAdpRawStaticPressureData.msg
 	MscsLeftAdpRawTemperatureData.msg
+	MscsLeftAdpIasData.msg
+	MscsLeftAdpCasData.msg
+	MscsLeftAdpTasData.msg
+	MscsLeftAdpMslAltitudeData.msg
+	MscsLeftAdpAglAltitudeData.msg
+	MscsLeftAdpPressureAltitudeData.msg
+	MscsLeftAdpDensityAltitudeData.msg
 	MscsRightAdpRawAngleOfAttackData.msg
 	MscsRightAdpRawAngleOfSideslipData.msg
 	MscsRightAdpRawDifferentialPressureData.msg
 	MscsRightAdpRawStaticPressureData.msg
 	MscsRightAdpRawTemperatureData.msg
+	MscsRightAdpIasData.msg
+	MscsRightAdpCasData.msg
+	MscsRightAdpTasData.msg
+	MscsRightAdpMslAltitudeData.msg
+	MscsRightAdpAglAltitudeData.msg
+	MscsRightAdpPressureAltitudeData.msg
+	MscsRightAdpDensityAltitudeData.msg
+	MscsLeftAdpCalibratedAngleOfAttackData.msg
+	MscsLeftAdpCalibratedAngleOfSideslipData.msg
+	MscsLeftAdpCalibratedDifferentialPressureData.msg
+	MscsLeftAdpCalibratedStaticPressureData.msg
+	MscsLeftAdpCalibratedTemperatureData.msg
+	MscsRightAdpCalibratedAngleOfAttackData.msg
+	MscsRightAdpCalibratedAngleOfSideslipData.msg
+	MscsRightAdpCalibratedDifferentialPressureData.msg
+	MscsRightAdpCalibratedStaticPressureData.msg
+	MscsRightAdpCalibratedTemperatureData.msg
 	MscsStatus.msg
 	NavigatorMissionItem.msg
 	NormalizedUnsignedSetpoint.msg

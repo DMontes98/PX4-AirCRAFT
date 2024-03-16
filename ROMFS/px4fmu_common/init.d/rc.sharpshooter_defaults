@@ -60,4 +60,4 @@ param set-default SYS_HAS_NUM_ASPD 1 # by default require an airspeed sensor
 #
 # AirCRAFT Lab Parameters
 #
-param set-default AL_MSCS_STARTUP 1
+param set-default MSCS_STARTUP 1

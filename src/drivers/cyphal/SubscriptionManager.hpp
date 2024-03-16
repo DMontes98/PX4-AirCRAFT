@@ -79,10 +79,12 @@
 #include "ServiceClients/List.hpp"
 #include "Subscribers/BaseSubscriber.hpp"
 #include "Subscribers/Heartbeat.hpp"
+#include "Subscribers/MSCSExecuteCommand.hpp"
+#include "Subscribers/MSCSRawData.hpp"
+#include "Subscribers/MSCSCalibratedData.hpp"
 #include "Subscribers/udral/Battery.hpp"
 #include "Subscribers/udral/Esc.hpp"
 #include "Subscribers/udral/Gnss.hpp"
-#include "Subscribers/legacy/LegacyBatteryInfo.hpp"
 #include "Subscribers/uORB/uorb_subscriber.hpp"
 
 typedef struct {
@@ -109,6 +111,9 @@ private:
 	UavcanDynamicPortSubscriber *_dynsubscribers {nullptr};
 
 	UavcanHeartbeatSubscriber _heartbeat_sub {_canard_handle};
+	MSCSExecuteCommandSubscriber _execute_command_sub {_canard_handle};
+	MSCSRawDataSubscriber _raw_data_sub {_canard_handle};
+	MSCSCalibratedDataSubscriber _calibrated_data_sub {_canard_handle};
 
 #if CONFIG_CYPHAL_GETINFO_RESPONDER
 	// GetInfo response
